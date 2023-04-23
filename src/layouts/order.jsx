@@ -1,4 +1,6 @@
 import React from "react";
+import { Send as SendIcon } from "@mui/icons-material";
+
 import {
   Container,
   Item,
@@ -8,6 +10,7 @@ import {
   Image,
   Stack,
 } from "./order.styled";
+import { Input, ButtonIcon, Checkbox } from "../base-components";
 
 export const Order = () => {
   return (
@@ -23,19 +26,14 @@ export const Order = () => {
           sx={{ m: 1 }}
         >
           <Item xs={12}>
-            <ColoredBox color="red">
-              <Title>Lorem Ipsum is simply</Title>
-            </ColoredBox>
+            <Title>
+              <Input label="Order name" />
+            </Title>
           </Item>
           <Item xs={12}>
-            <ColoredBox color="red">
-              <Title>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specim
-              </Title>
-            </ColoredBox>
+            <Title>
+              <Input label="Order description" />
+            </Title>
           </Item>
         </ItemContainer>
         <Item xs={12} sm>
@@ -51,9 +49,7 @@ export const Order = () => {
         <Item xs={12}>
           <Stack spacing={2}>
             {[1, 2, 3, 4, 5].map((itemNo) => (
-              <ColoredBox key={itemNo} color={"rgba(88,92,135,0.47)"}>
-                extra {itemNo}
-              </ColoredBox>
+              <Checkbox key={itemNo} label={`${itemNo}`} checked />
             ))}
           </Stack>
         </Item>
@@ -61,13 +57,13 @@ export const Order = () => {
       <ItemContainer xs={12} sm={6}>
         <Item xs={12}>
           <Stack spacing={2}>
-            <ColoredBox color="brown">fork?</ColoredBox>
-            <ColoredBox color="yellow">note</ColoredBox>
+            <Checkbox label="include fork?" checked={false} />
+            <Input multiline rows={5} label="Note" />
           </Stack>
         </Item>
       </ItemContainer>
-      <Item xs={12}>
-        <ColoredBox color="green">Submit</ColoredBox>
+      <Item xs={12} align="center">
+        <ButtonIcon endIcon={<SendIcon />}>Submit</ButtonIcon>
       </Item>
     </Container>
   );

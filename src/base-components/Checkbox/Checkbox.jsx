@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Checkbox as MuiCheckbox } from "@mui/material";
+import { Checkbox as MuiCheckbox } from "./Checkbox.styled";
 
 const Checkbox = ({
   label,
   size,
   color,
+  textColor,
+  muiColor,
   checked,
   onChange,
   icon,
@@ -13,7 +15,9 @@ const Checkbox = ({
   defaultChecked,
   required,
   disabled,
-  sx,
+  labelPlacement,
+  helperText,
+  fontSize,
   ...props
 }) => {
   return (
@@ -21,6 +25,8 @@ const Checkbox = ({
       label={label}
       size={size}
       color={color}
+      textColor={textColor}
+      muiColor={muiColor}
       icon={icon}
       checkedIcon={checkedIcon}
       defaultChecked={defaultChecked}
@@ -28,7 +34,9 @@ const Checkbox = ({
       disabled={disabled}
       checked={checked}
       onChange={onChange}
-      sx={sx}
+      labelPlacement={labelPlacement}
+      helperText={helperText}
+      fontSize={fontSize}
       {...props}
     />
   );
@@ -38,26 +46,32 @@ Checkbox.propTypes = {
   label: PropTypes.string,
   size: PropTypes.oneOf(["small", "medium"]),
   color: PropTypes.string,
+  muiColor: PropTypes.string,
   checked: PropTypes.bool,
   icon: PropTypes.node,
   checkedIcon: PropTypes.node,
   defaultChecked: PropTypes.bool,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
-  sx: PropTypes.shape,
+  labelPlacement: PropTypes.oneOf(["top", "start", "bottom", "end"]),
+  helperText: PropTypes.string,
+  fontSize: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
   label: undefined,
   size: "small",
-  color: "default",
+  color: undefined,
+  muiColor: undefined,
   checked: false,
   icon: undefined,
   checkedIcon: undefined,
   defaultChecked: false,
   required: false,
   disabled: false,
-  sx: {},
+  labelPlacement: undefined,
+  helperText: undefined,
+  fontSize: undefined,
 };
 
 export default Checkbox;
