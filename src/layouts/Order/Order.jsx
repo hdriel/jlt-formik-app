@@ -1,10 +1,8 @@
 import React from "react";
-import { Send as SendIcon } from "@mui/icons-material";
 
 import {
   Container,
   Item,
-  ColoredBox,
   ItemContainer,
   Title,
   Image,
@@ -13,7 +11,6 @@ import {
 import { Input, ButtonIcon, Checkbox } from "../../base-components";
 
 export const Order = ({
-  _id,
   orderName,
   orderDescription,
   orderImage,
