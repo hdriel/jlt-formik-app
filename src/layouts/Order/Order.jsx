@@ -60,7 +60,13 @@ export const Order = ({
           </Item>
         </ItemContainer>
         <Item xs={12} sm>
-          <Image src={orderImage} width={"100%"} height={200} fit={"contain"} />
+          <Image
+            src={orderImage ?? ""}
+            width="100%"
+            height={200}
+            fit="contain"
+            brokenImage
+          />
         </Item>
       </Container>
       <ItemContainer xs={12} sm={6}>

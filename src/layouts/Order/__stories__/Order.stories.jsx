@@ -8,5 +8,9 @@ export default {
 };
 
 export const Default = () => {
+  return <Order />;
+};
+
+export const JsonProps = () => {
   return <Order {...myOrderProps} />;
 };
