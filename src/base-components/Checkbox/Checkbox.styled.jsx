@@ -39,5 +39,9 @@ export const Checkbox = styled(
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </>
-  )
+  ),
+  {
+    shouldForwardProp: (prop) =>
+      !["textColor", "muiColor", "fontSize", "helperText"].includes(prop),
+  }
 )``;

@@ -31,32 +31,27 @@ export const Order = ({
         <ItemContainer
           xs={12}
           sm={9}
-          container
           spacing={1}
           justifyContent="flex-start"
           alignItems="flex-start"
           sx={{ m: 1 }}
         >
           <Item xs={12}>
-            <Title>
-              <Input
-                label="Order name"
-                value={orderName}
-                readOnly
-                variant="standard"
-              />
-            </Title>
+            <Input
+              label="Order name"
+              value={orderName}
+              readOnly
+              variant="standard"
+            />
           </Item>
           <Item xs={12}>
-            <Title>
-              <Input
-                label="Order description"
-                value={orderDescription}
-                readOnly
-                variant="standard"
-                multiline
-              />
-            </Title>
+            <Input
+              label="Order description"
+              value={orderDescription}
+              readOnly
+              variant="standard"
+              multiline
+            />
           </Item>
         </ItemContainer>
         <Item xs={12} sm>

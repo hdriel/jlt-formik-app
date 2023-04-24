@@ -22,9 +22,7 @@ export const Container = styled(({ ...props }) => (
   height: 100%;
 `;
 
-export const Title = styled(({ ...props }) => (
-  <MuiTypography container spacing={2} {...props} />
-))``;
+export const Title = styled(({ ...props }) => <MuiTypography {...props} />)``;
 
 export const Item = styled(({ ...props }) => (
   <MuiGrid xs={12} item {...props} />
