@@ -27,7 +27,7 @@ export const Order = ({
 
   return (
     <Container>
-      <Container direction={{ xs: "column-reverse", sm: "row" }}>
+      <Container direction={{ xs: "column-reverse", md: "row" }}>
         <ItemContainer
           xs={12}
           sm={9}
@@ -54,6 +54,7 @@ export const Order = ({
                 value={orderDescription}
                 readOnly
                 variant="standard"
+                multiline
               />
             </Title>
           </Item>
@@ -64,9 +65,10 @@ export const Order = ({
       </Container>
       <ItemContainer xs={12} sm={6}>
         <Item xs={12}>
-          <Stack spacing={2}>
+          <Title>Extra: </Title>
+          <Stack spacing={0}>
             {extras
-              .sort((e1, e2) => e1.order - e2.order)
+              ?.sort((e1, e2) => e1.order - e2.order)
               .map(({ _id, name, price }) => (
                 <Checkbox key={_id} label={`${name} (${price}$)`} checked />
               ))}
@@ -75,7 +77,7 @@ export const Order = ({
       </ItemContainer>
       <ItemContainer xs={12} sm={6}>
         <Item xs={12}>
-          <Stack spacing={2}>
+          <Stack spacing={3}>
             <Checkbox label="Include cutlery?" checked={cutlery} />
             <Input
               multiline
@@ -87,7 +89,7 @@ export const Order = ({
           </Stack>
         </Item>
       </ItemContainer>
-      <Item xs={12} align="center">
+      <Item xs={12} align="center" mt={{ xs: 5, sm: 10, md: 20 }}>
         <ButtonIcon endIcon={<span>{totalPrice}$</span>}>Submit</ButtonIcon>
       </Item>
     </Container>

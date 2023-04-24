@@ -1,5 +1,6 @@
 import React from "react";
 import { Order } from "../Order";
+import myOrderProps from "../../../my-order.json";
 
 export default {
   title: "Layouts/Order",
@@ -7,5 +8,5 @@ export default {
 };
 
 export const Default = () => {
-  return <Order />;
+  return <Order {...myOrderProps} />;
 };

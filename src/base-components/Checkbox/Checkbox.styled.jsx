@@ -23,6 +23,7 @@ export const Checkbox = styled(
         required={required}
         disabled={disabled}
         labelPlacement={labelPlacement}
+        sx={{ m: 0 }}
         control={
           <MuiCheckbox
             {...props}
