@@ -1,1 +1,1 @@
-export { default as Order } from "./Order/Order";
+export { Order } from "./Order/Order";

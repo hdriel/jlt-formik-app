@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { withFormik } from "formik";
+import { useFormik, useFormikContext } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { getTotalPrice } from "./Order.utils";
@@ -13,7 +13,21 @@ import {
 } from "./Order.styled";
 import { Input, ButtonIcon, Checkbox } from "../../base-components";
 
-const Order = (props) => {
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const Order = (props) => {
+  const {
+    orderName,
+    orderDescription,
+    orderImage,
+    freeExtras,
+    basicPrice,
+    cutlery,
+    notes,
+    extras,
+    onSubmit,
+  } = props;
+
   const {
     values,
     handleChange,
@@ -21,13 +35,19 @@ const Order = (props) => {
     handleBlur,
     handleSubmit,
     isSubmitting,
-    orderName,
-    orderDescription,
-    orderImage,
-    freeExtras,
-    basicPrice,
-    extras,
-  } = props;
+  } = useFormik({
+    initialValues: {
+      cutlery: cutlery,
+      notes: notes,
+      extraIds: [],
+    },
+    onSubmit: async (values) => {
+      await sleep(2000);
+      console.table(values);
+      onSubmit(values);
+    },
+  });
+
   const totalPrice = useMemo(
     () =>
       getTotalPrice({
@@ -139,22 +159,3 @@ const Order = (props) => {
     </Container>
   );
 };
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export default withFormik({
-  // enableReinitialize: true,
-  // validateOnBlur: false,
-  // validateOnChange: false,
-  // validateOnMount: false,
-  mapPropsToValues: (props) => ({
-    cutlery: props.cutlery,
-    notes: props.notes,
-    extraIds: [],
-  }),
-  handleSubmit: async (values, { props }) => {
-    await sleep(2500);
-    console.table(values);
-    props.onSubmit(values);
-  },
-})(Order);
