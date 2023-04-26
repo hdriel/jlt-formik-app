@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
+import { withFormikDevtools } from "formik-devtools-extension";
 
 import { getTotalPrice } from "./Order.utils";
 import {
@@ -41,14 +42,22 @@ export const Order = ({
       // validateOnMount={false}
       // validateOnChange={false}
       initialValues={{ cutlery, notes: note, extraIds: [] }}
+      validate={(values) => {
+        const errors = {};
+        if (!values.notes.length) errors.notes = "is required!";
+        return errors;
+      }}
       onSubmit={async (values) => {
         await sleep(2500);
         alert(JSON.stringify(values, null, 4));
       }}
     >
       {(props) => {
+        withFormikDevtools(props);
         const {
           values,
+          errors,
+          touched,
           handleChange,
           setFieldValue,
           handleBlur,
@@ -145,6 +154,9 @@ export const Order = ({
                     variant={"outlined"}
                     value={values.notes}
                     onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.notes && touched.notes}
+                    helperText={errors.notes}
                   />
                 </Stack>
               </Item>
