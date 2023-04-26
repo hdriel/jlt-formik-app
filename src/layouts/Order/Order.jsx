@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { withFormik } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
+import { withFormikDevtools } from "formik-devtools-extension";
 
 import { getTotalPrice } from "./Order.utils";
 import {
@@ -14,6 +15,7 @@ import {
 import { Input, ButtonIcon, Checkbox } from "../../base-components";
 
 const Order = (props) => {
+  withFormikDevtools(props);
   const {
     values,
     handleChange,
