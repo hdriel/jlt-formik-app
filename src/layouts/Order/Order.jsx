@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useFormik, useFormikContext } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
+import { withFormikDevtools } from "formik-devtools-extension";
 
 import { getTotalPrice } from "./Order.utils";
 import {
@@ -28,14 +29,7 @@ export const Order = (props) => {
     onSubmit,
   } = props;
 
-  const {
-    values,
-    handleChange,
-    setFieldValue,
-    handleBlur,
-    handleSubmit,
-    isSubmitting,
-  } = useFormik({
+  const formikProps = useFormik({
     initialValues: {
       cutlery: cutlery,
       notes: notes,
@@ -48,6 +42,16 @@ export const Order = (props) => {
     },
   });
 
+  withFormikDevtools(formikProps);
+
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+    handleSubmit,
+    isSubmitting,
+  } = formikProps;
   const totalPrice = useMemo(
     () =>
       getTotalPrice({
