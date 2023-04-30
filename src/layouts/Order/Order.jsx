@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 import { withFormikDevtools } from "formik-devtools-extension";
 
@@ -44,7 +44,7 @@ export const Order = ({
       initialValues={{ cutlery, notes: note, extraIds: [] }}
       validate={(values) => {
         const errors = {};
-        if (!values.notes.length) errors.notes = "is required!";
+        if (!values.notes.length) errors.notes = "Is required!";
         return errors;
       }}
       onSubmit={async (values) => {
@@ -140,24 +140,26 @@ export const Order = ({
             <ItemContainer xs={12} sm={6}>
               <Item xs={12}>
                 <Stack spacing={3}>
-                  <Checkbox
-                    name="cutlery"
-                    label="Include cutlery?"
-                    checked={values.cutlery}
-                    onChange={handleChange}
-                  />
-                  <Input
-                    name="notes"
-                    multiline
-                    rows={5}
-                    label="Note"
-                    variant={"outlined"}
-                    value={values.notes}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={errors.notes && touched.notes}
-                    helperText={errors.notes}
-                  />
+                  <Field name="cutlery">
+                    {({ field }) => (
+                      <Checkbox label="Include cutlery?" {...field} />
+                    )}
+                  </Field>
+                  <Field name="notes">
+                    {({ field, meta }) => {
+                      return (
+                        <Input
+                          multiline
+                          rows={5}
+                          label="Note"
+                          variant={"outlined"}
+                          helperText={meta.touched ? meta.error : ""}
+                          error={meta.error && meta.touched}
+                          {...field}
+                        />
+                      );
+                    }}
+                  </Field>
                 </Stack>
               </Item>
             </ItemContainer>
