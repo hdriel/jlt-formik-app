@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { withFormik } from "formik";
+import { withFormik, useField, FieldArray } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 import { withFormikDevtools } from "formik-devtools-extension";
 
@@ -39,6 +39,9 @@ const Order = (props) => {
       }),
     [values.extraIds.length]
   );
+
+  const [notesFiled, notesMeta] = useField("notes");
+  const [cutleryFiled, cutleryMeta] = useField("cutlery");
 
   return (
     <Container>
@@ -84,24 +87,24 @@ const Order = (props) => {
         <Item xs={12}>
           <Title>Extra: ({freeExtras} free) </Title>
           <Stack spacing={0}>
-            {extras
-              ?.sort((e1, e2) => e1.order - e2.order)
-              .map(({ _id, name, price }) => (
-                <Checkbox
-                  key={_id}
-                  label={`${name} (${price}$)`}
-                  checked={values.extraIds.includes(_id)}
-                  onChange={(event) => {
-                    let newValues = values.extraIds;
-                    if (event.target.checked) {
-                      newValues.push(_id);
-                    } else {
-                      newValues = newValues.filter((eid) => eid !== _id);
-                    }
-                    setFieldValue("extraIds", newValues);
-                  }}
-                />
-              ))}
+            <FieldArray name="extraIds">
+              {({ remove, push }) => {
+                return extras
+                  ?.sort((e1, e2) => e1.order - e2.order)
+                  .map(({ _id, name, price }) => (
+                    <Checkbox
+                      key={_id}
+                      label={`${name} (${price}$)`}
+                      checked={values.extraIds.includes(_id)}
+                      onChange={() => {
+                        const eIndex = values.extraIds.indexOf(_id);
+                        if (eIndex >= 0) remove(eIndex);
+                        else push(_id);
+                      }}
+                    />
+                  ));
+              }}
+            </FieldArray>
           </Stack>
         </Item>
       </ItemContainer>
@@ -109,19 +112,18 @@ const Order = (props) => {
         <Item xs={12}>
           <Stack spacing={3}>
             <Checkbox
-              name="cutlery"
               label="Include cutlery?"
-              checked={values.cutlery}
-              onChange={handleChange}
+              checked={cutleryFiled.value}
+              {...cutleryFiled}
             />
             <Input
-              name="notes"
               multiline
               rows={5}
               label="Note"
               variant={"outlined"}
-              value={values.notes}
-              onChange={handleChange}
+              helperText={notesMeta.touched ? notesMeta.error : ""}
+              error={!!(notesMeta.touched && notesMeta.error)}
+              {...notesFiled}
             />
           </Stack>
         </Item>
@@ -154,6 +156,9 @@ export default withFormik({
     notes: props.notes,
     extraIds: [],
   }),
+  validate(values) {
+    return { ...(!values.notes.length && { notes: "is required!" }) };
+  },
   handleSubmit: async (values, { props }) => {
     await sleep(2500);
     console.table(values);
