@@ -3,6 +3,7 @@ import { withFormik, useField, FieldArray } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 import { withFormikDevtools } from "formik-devtools-extension";
 
+import { orderSchema } from "./Order.validation";
 import { getTotalPrice } from "./Order.utils";
 import {
   Container,
@@ -133,7 +134,6 @@ const Order = (props) => {
           disabled={isSubmitting}
           endIcon={<span>{totalPrice}$</span>}
           onClick={() => {
-            debugger;
             handleSubmit();
           }}
         >
@@ -147,18 +147,14 @@ const Order = (props) => {
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default withFormik({
-  // enableReinitialize: true,
-  // validateOnBlur: false,
-  // validateOnChange: false,
-  // validateOnMount: false,
   mapPropsToValues: (props) => ({
     cutlery: props.cutlery,
     notes: props.notes,
     extraIds: [],
   }),
-  validate(values) {
-    return { ...(!values.notes.length && { notes: "is required!" }) };
-  },
+
+  validationSchema: orderSchema,
+
   handleSubmit: async (values, { props }) => {
     await sleep(2500);
     console.table(values);

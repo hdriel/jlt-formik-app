@@ -14,7 +14,6 @@ function App() {
           {...myOrderProps}
           onSubmit={async (values) => {
             await sleep(500);
-            console.log(JSON.stringify(values, null, 4));
           }}
         />
       </Container>
