@@ -13,6 +13,7 @@ import {
   Stack,
 } from "./Order.styled";
 import { Input, ButtonIcon, Checkbox } from "../../base-components";
+import { orderSchema } from "./Order.validation";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -42,11 +43,7 @@ export const Order = ({
       // validateOnMount={false}
       // validateOnChange={false}
       initialValues={{ cutlery, notes: note, extraIds: [] }}
-      validate={(values) => {
-        const errors = {};
-        if (!values.notes.length) errors.notes = "is required!";
-        return errors;
-      }}
+      validationSchema={orderSchema}
       onSubmit={async (values) => {
         await sleep(2500);
         alert(JSON.stringify(values, null, 4));
