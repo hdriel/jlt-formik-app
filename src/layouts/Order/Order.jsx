@@ -3,6 +3,7 @@ import { useFormik, useFormikContext } from "formik";
 import CircularProgress from "@mui/material/CircularProgress";
 import { withFormikDevtools } from "formik-devtools-extension";
 
+import { orderSchema } from "./Order.validation";
 import { getTotalPrice } from "./Order.utils";
 import {
   Container,
@@ -35,6 +36,7 @@ export const Order = (props) => {
       notes: notes,
       extraIds: [],
     },
+    validationSchema: orderSchema,
     onSubmit: async (values) => {
       await sleep(2000);
       console.table(values);
